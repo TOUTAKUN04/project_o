@@ -1,0 +1,11 @@
+﻿```mermaid
+flowchart LR
+  User([User]) --> Inputs[Inputs\nTelegram | Discord | Slack | WhatsApp | Local UI | Cron]
+  Inputs --> Gateway[Gateway Core\nRouter | Session | Policy | Scheduler | WS API]
+  Gateway --> Agent[PI Agent\nReasoning Engine]
+  Agent --> Providers[LLM Providers\nOpenAI | MiniMax | Kimi | Ollama]
+  Agent --> Tools[Tool Access\nFiles | Shell | Browsing | APIs]
+  Agent --> Skills[Skills]
+  Gateway --> Workspace[Workspace\nAgents | Identity | Tools | Memory | History]
+  Tools --> Workspace
+```

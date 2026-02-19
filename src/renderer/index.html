@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overlay Assistant</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="overlay">
+      <div class="header">
+        <div class="title-row">
+          <div class="title" id="assistantTitle">Project O</div>
+          <div class="subtitle">Desktop Assistant</div>
+        </div>
+        <div class="header-actions">
+          <div class="status" id="status">Local</div>
+          <button id="settingsBtn" class="ghost">Settings</button>
+        </div>
+      </div>
+
+      <div class="settings" id="settingsPanel" aria-hidden="true">
+        <div class="settings-row">
+          <label>Assistant Name</label>
+          <input id="assistantNameInput" type="text" placeholder="Project O" />
+        </div>
+        <div class="settings-row">
+          <label>Persona Prompt</label>
+          <textarea id="personaPromptInput" rows="3" placeholder="Optional personality override..."></textarea>
+        </div>
+        <div class="settings-row">
+          <label>Model</label>
+          <input id="modelInput" type="text" placeholder="qwen-coder" />
+        </div>
+        <div class="settings-row">
+          <label>Embedding Model</label>
+          <input id="embeddingInput" type="text" placeholder="qwen-coder" />
+        </div>
+        <div class="settings-row">
+          <label>Ollama URL</label>
+          <input id="ollamaInput" type="text" placeholder="http://localhost:11434" />
+        </div>
+        <div class="settings-row">
+          <label>Allow Remote Ollama</label>
+          <input id="allowRemoteInput" type="checkbox" />
+        </div>
+        <div class="settings-row">
+          <label>Allowed Roots</label>
+          <textarea id="allowedRootsInput" rows="2" placeholder="C:\Projects; D:\Work"></textarea>
+        </div>
+        <div class="settings-row">
+          <label>Trust Project</label>
+          <button id="trustProject" class="ghost">Pick Folder</button>
+        </div>
+        <div class="settings-row">
+          <label>App Allowlist</label>
+          <input id="appAllowlistInput" type="text" placeholder="notepad.exe; code.exe" />
+        </div>
+        <div class="settings-row">
+          <label>Hotkey</label>
+          <input id="hotkeyInput" type="text" placeholder="Ctrl+Shift+O" />
+        </div>
+        <div class="settings-row">
+          <label>Start on Login</label>
+          <input id="startupInput" type="checkbox" />
+        </div>
+        <div class="settings-row">
+          <label>Popup Mode</label>
+          <select id="popupInput">
+            <option value="hotkey">Hotkey Only</option>
+            <option value="hotkey+timer">Hotkey + Timer</option>
+          </select>
+        </div>
+        <div class="settings-actions">
+          <button id="saveSettings">Save</button>
+        </div>
+      </div>
+
+      <div class="workspace">
+        <div class="tools-column">
+          <div class="panel">
+            <div class="panel-header">
+              <div>File Editor</div>
+              <div class="panel-actions">
+                <button id="newFile" class="ghost">New</button>
+                <button id="openFile" class="ghost">Open</button>
+                <button id="aiEdit" class="ghost">AI Edit</button>
+                <button id="saveFile">Save</button>
+                <button id="capture" class="ghost">Capture</button>
+              </div>
+            </div>
+            <div class="file-path" id="filePath">No file opened</div>
+            <textarea id="fileContent" rows="6" placeholder="Open a file to edit..."></textarea>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>App Control</div>
+              <div class="panel-actions">
+                <button id="launchApp" class="ghost">Launch</button>
+                <button id="focusApp" class="ghost">Focus</button>
+              </div>
+            </div>
+            <input id="appCommand" type="text" placeholder="notepad.exe or full path" />
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>Memory Search</div>
+              <div class="panel-actions">
+                <button id="searchMemories" class="ghost">Search</button>
+              </div>
+            </div>
+            <input id="memoryQuery" type="text" placeholder="Search your memories..." />
+            <div class="memory-results" id="memoryResults"></div>
+          </div>
+        </div>
+
+        <div class="chat-column">
+          <div class="chat" id="chat"></div>
+
+          <div class="input">
+            <textarea id="prompt" rows="3" placeholder="Ask me to code, search, or automate..."></textarea>
+            <div class="actions">
+              <button id="send">Send</button>
+              <button id="mic" class="ghost">Mic Off</button>
+              <button id="speak" class="ghost">Speak Off</button>
+              <button id="permission">Allow Edits</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="diffModal" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div>Review Changes</div>
+          <button id="closeDiff" class="ghost">Close</button>
+        </div>
+        <div class="diff-grid">
+          <div>
+            <div class="diff-title">Original</div>
+            <div id="diffOriginal" class="diff-view"></div>
+          </div>
+          <div>
+            <div class="diff-title">Edited</div>
+            <div id="diffEdited" class="diff-view"></div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="confirmSave">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+﻿{
+  "name": "overlay",
+  "version": "0.1.0",
+  "description": "Windows overlay assistant for Ollama",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "lint": "echo no lint",
+    "build": "electron-builder",
+    "dist": "electron-builder --win nsis",
+    "rebuild-native": "electron-rebuild -f -w better-sqlite3"
+  },
+  "dependencies": {
+    "@slack/socket-mode": "^1.3.5",
+    "@slack/web-api": "^7.8.0",
+    "better-sqlite3": "^12.6.2",
+    "discord.js": "^14.17.3"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3",
+    "electron-rebuild": "^3.2.9"
+  },
+  "build": {
+    "appId": "com.projecto.overlay",
+    "productName": "Overlay",
+    "asar": true,
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true
+    }
+  }
+}

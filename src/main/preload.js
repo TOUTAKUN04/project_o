@@ -1,0 +1,25 @@
+﻿const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('overlay', {
+  getConfig: () => ipcRenderer.invoke('config:get'),
+  setConfig: (patch) => ipcRenderer.invoke('config:set', patch),
+  trustProject: () => ipcRenderer.invoke('projects:trust'),
+  getRecentMemories: () => ipcRenderer.invoke('memories:recent'),
+  addMemory: (memory) => ipcRenderer.invoke('memories:add', memory),
+  searchMemories: (query) => ipcRenderer.invoke('memories:search', query),
+  requestEditPermission: () => ipcRenderer.invoke('permissions:edit:request'),
+  getEditPermission: () => ipcRenderer.invoke('permissions:edit:get'),
+  requestControlPermission: () => ipcRenderer.invoke('permissions:control:request'),
+  getControlPermission: () => ipcRenderer.invoke('permissions:control:get'),
+  openFile: () => ipcRenderer.invoke('files:open'),
+  saveFile: (payload) => ipcRenderer.invoke('files:save', payload),
+  createFile: (payload) => ipcRenderer.invoke('files:create', payload),
+  captureScreen: () => ipcRenderer.invoke('capture:screen'),
+  launchApp: (command) => ipcRenderer.invoke('apps:launch', command),
+  focusApp: (appName) => ipcRenderer.invoke('apps:focus', appName),
+  checkOllama: () => ipcRenderer.invoke('ollama:health'),
+  chat: (messages, context) => ipcRenderer.invoke('ollama:chat', { messages, context }),
+  onChunk: (handler) => ipcRenderer.on('ollama:chunk', (_evt, chunk) => handler(chunk)),
+  minimizeWindow: () => ipcRenderer.invoke('window:minimize'),
+  closeWindow: () => ipcRenderer.invoke('window:close'),
+});
