@@ -42,7 +42,9 @@ function createWhatsAppAdapter({ bus, log, config, webhook } = {}) {
   const phoneId = process.env.WHATSAPP_PHONE_NUMBER_ID || '';
   const verifyToken = process.env.WHATSAPP_VERIFY_TOKEN || '';
   const appSecret = process.env.WHATSAPP_APP_SECRET || '';
-  const enabled = !!config?.adapters?.whatsapp && !!token && !!phoneId && !!verifyToken && !!webhook;
+  const remoteWebhookRequested = process.env.OVERLAY_WEBHOOK_ALLOW_REMOTE === '1';
+  const hasCoreConfig = !!config?.adapters?.whatsapp && !!token && !!phoneId && !!verifyToken && !!webhook;
+  const enabled = hasCoreConfig && (!remoteWebhookRequested || !!appSecret);
   const ctx = createAdapterContext({ name: 'whatsapp', bus, log, enabled });
 
   function registerWebhook() {
@@ -96,6 +98,8 @@ function createWhatsAppAdapter({ bus, log, config, webhook } = {}) {
     if (!enabled) {
       if (config?.adapters?.whatsapp && (!token || !phoneId || !verifyToken)) {
         ctx.warn('disabled (missing WHATSAPP_TOKEN/PHONE_NUMBER_ID/VERIFY_TOKEN)');
+      } else if (config?.adapters?.whatsapp && remoteWebhookRequested && !appSecret) {
+        ctx.warn('disabled (remote webhook requires WHATSAPP_APP_SECRET)');
       }
       return;
     }

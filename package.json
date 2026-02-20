@@ -1,14 +1,16 @@
-﻿{
-  "name": "overlay",
+{
+  "name": "olivia",
   "version": "0.1.0",
-  "description": "Windows overlay assistant for Ollama",
+  "description": "Windows Olivia assistant for Ollama",
   "main": "src/main/main.js",
   "scripts": {
     "start": "electron .",
+    "start:bg": "electron . --background",
     "dev": "electron .",
     "lint": "echo no lint",
     "build": "electron-builder",
-    "dist": "electron-builder --win nsis",
+    "dist:raw": "electron-builder --win nsis",
+    "dist": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-win-installer.ps1",
     "rebuild-native": "electron-rebuild -f -w better-sqlite3"
   },
   "dependencies": {
@@ -23,8 +25,8 @@
     "electron-rebuild": "^3.2.9"
   },
   "build": {
-    "appId": "com.projecto.overlay",
-    "productName": "Overlay",
+    "appId": "com.projecto.olivia",
+    "productName": "Olivia",
     "asar": true,
     "files": [
       "src/**/*",
@@ -34,7 +36,8 @@
       "output": "dist"
     },
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "src/main/icon.ico"
     },
     "nsis": {
       "oneClick": true,

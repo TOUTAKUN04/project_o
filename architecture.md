@@ -1,11 +1,11 @@
-﻿# Overlay Architecture
+﻿# Olivia Architecture
 
 This document maps the multi-channel assistant diagram to a concrete module list and data-flow spec.
 
 ## Modules
 
 ### Input Adapters
-Telegram, Discord, Slack, WhatsApp, Local Overlay UI, Cron.
+Telegram, Discord, Slack, WhatsApp, Local Olivia UI, Cron.
 - Responsibility: normalize incoming messages into a common event shape.
 
 ### Gateway Core (Daemon / Orchestrator)
@@ -17,11 +17,11 @@ Components: Message Router, Session Manager, Policy Engine, Scheduler, WebSocket
 - Must be stateless; all state comes from Gateway.
 
 ### LLM Providers
-OpenAI / MiniMax / Kimi / Ollama.
+OpenAI-compatible APIs / Gemini / Ollama.
 - Responsibility: chat + embeddings.
 
 ### Tool Access Layer
-File system, app control, browser, APIs.
+File system, command execution, browser, APIs.
 - Responsibility: execute tools only after policy checks.
 
 ### Workspace (On-Disk State)
@@ -46,9 +46,10 @@ Local logs, metrics, traces, error capture.
 ## Mapping to Current Overlay App
 - Gateway Core -> `overlay/src/main/main.js`
 - Session Manager -> `overlay/src/main/db.js`
-- Policy Engine -> `overlay/src/main/config.js` + allowlists + `permissions.js`
-- PI Agent -> `overlay/src/main/ollama.js` + prompt logic in renderer
-- Tool Access -> `overlay/src/main/files.js`, `overlay/src/main/appcontrol.js`, `overlay/src/main/capture.js`
+- Policy Engine -> `overlay/src/main/config.js` + root policies + `permissions.js`
+- PI Agent -> `overlay/src/main/ollama.js` (Ollama/API provider adapter) + prompt logic in renderer
+- Runtime Feelings Engine -> `overlay/src/main/feelings.js` + prompt integration in `overlay/src/main/prompt.js`
+- Tool Access -> `overlay/src/main/files.js`, `overlay/src/main/capture.js`, `overlay/src/main/systemrun.js`, `overlay/src/main/websearch.js`, `overlay/src/main/gittools.js`
 - Event Bus (internal) -> `overlay/src/main/bus.js`
 - Adapter Stubs -> `overlay/src/main/adapters/`
 - Workspace -> `%AppData%/overlay` + Allowed Roots
@@ -66,5 +67,5 @@ Local logs, metrics, traces, error capture.
 
 ## Notes
 - The PI Agent should never call tools directly; all tool access must pass through Gateway policy checks.
-- The Gateway is the right place to enforce allowlists, permissions, and auditing.
+- The Gateway is the right place to enforce root policies, permissions, and auditing.
 - For scale, add a queue/event bus between inputs and Gateway Core.

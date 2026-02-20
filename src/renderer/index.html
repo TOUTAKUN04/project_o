@@ -3,14 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overlay Assistant</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';"
+    />
+    <title>Olivia Assistant</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="overlay">
       <div class="header">
         <div class="title-row">
-          <div class="title" id="assistantTitle">Project O</div>
+          <div class="title" id="assistantTitle">Olivia</div>
           <div class="subtitle">Desktop Assistant</div>
         </div>
         <div class="header-actions">
@@ -20,57 +24,142 @@
       </div>
 
       <div class="settings" id="settingsPanel" aria-hidden="true">
-        <div class="settings-row">
-          <label>Assistant Name</label>
-          <input id="assistantNameInput" type="text" placeholder="Project O" />
+        <div class="settings-shell">
+          <section class="settings-section">
+            <div class="settings-title">Identity</div>
+            <div class="settings-row">
+              <label>Assistant Name</label>
+              <input id="assistantNameInput" type="text" placeholder="Olivia" />
+            </div>
+            <div class="settings-row">
+              <label>Persona Prompt</label>
+              <textarea id="personaPromptInput" rows="3" placeholder="Optional personality override..."></textarea>
+            </div>
+          </section>
+
+          <section class="settings-section">
+            <div class="settings-title">Mood</div>
+            <div class="settings-row">
+              <label>Simulated Feelings</label>
+              <input id="feelingsEnabledInput" type="checkbox" />
+            </div>
+            <div class="settings-row">
+              <label>Feelings Tone</label>
+              <select id="feelingsToneInput">
+                <option value="calm">Calm</option>
+                <option value="balanced">Balanced</option>
+                <option value="warm">Warm</option>
+              </select>
+            </div>
+            <div class="settings-row">
+              <label>Feelings Expressiveness</label>
+              <select id="feelingsExpressivenessInput">
+                <option value="subtle">Subtle</option>
+                <option value="balanced">Balanced</option>
+                <option value="expressive">Expressive</option>
+              </select>
+            </div>
+            <div class="settings-row">
+              <label>Mood Decay (minutes)</label>
+              <input id="feelingsDecayInput" type="number" min="5" max="240" step="1" />
+            </div>
+          </section>
+
+          <section class="settings-section">
+            <div class="settings-title">Models</div>
+            <div class="settings-row">
+              <label>Provider</label>
+              <select id="llmProviderInput">
+                <option value="ollama">Ollama (Local)</option>
+                <option value="openai">OpenAI-Compatible API</option>
+                <option value="gemini">Gemini Native API</option>
+              </select>
+            </div>
+            <div class="settings-row">
+              <label>Model</label>
+              <input id="modelInput" type="text" placeholder="qwen-coder" />
+            </div>
+            <div class="settings-row">
+              <label>Embedding Model</label>
+              <input id="embeddingInput" type="text" placeholder="qwen-coder" />
+            </div>
+            <div class="settings-row">
+              <label>Ollama URL (Ollama mode)</label>
+              <input id="ollamaInput" type="text" placeholder="http://localhost:11434" />
+            </div>
+            <div class="settings-row">
+              <label>API Base URL (OpenAI/Gemini mode)</label>
+              <input id="apiBaseUrlInput" type="text" placeholder="https://api.openai.com/v1" />
+            </div>
+            <div class="settings-row">
+              <label>API Key (OpenAI/Gemini mode)</label>
+              <input id="apiKeyInput" type="password" placeholder="sk-..." />
+            </div>
+            <div class="settings-row">
+              <label>Allow Remote Ollama</label>
+              <input id="allowRemoteInput" type="checkbox" />
+            </div>
+          </section>
+
+          <section class="settings-section">
+            <div class="settings-title">Workspace</div>
+            <div class="settings-row">
+              <label>Allowed Roots</label>
+              <textarea id="allowedRootsInput" rows="2" placeholder="C:\Projects; D:\Work"></textarea>
+            </div>
+            <div class="settings-row">
+              <label>Trust Project</label>
+              <button id="trustProject" class="ghost">Pick Folder</button>
+            </div>
+            <div class="settings-row">
+              <label>Command Timeout (ms)</label>
+              <input id="commandTimeoutInput" type="number" min="1000" max="300000" step="1000" />
+            </div>
+            <div class="settings-row">
+              <label>Auto Tool Mode</label>
+              <input id="autoToolModeInput" type="checkbox" />
+            </div>
+          </section>
+
+          <section class="settings-section">
+            <div class="settings-title">Desktop</div>
+            <div class="settings-row">
+              <label>Hotkey</label>
+              <input id="hotkeyInput" type="text" placeholder="Ctrl+Shift+O" />
+            </div>
+            <div class="settings-row">
+              <label>Start on Login</label>
+              <input id="startupInput" type="checkbox" />
+            </div>
+            <div class="settings-row">
+              <label>Popup Mode</label>
+              <select id="popupInput">
+                <option value="hotkey">Hotkey Only</option>
+                <option value="hotkey+timer">Hotkey + Timer</option>
+              </select>
+            </div>
+            <div class="settings-row">
+              <label>Mic Mode</label>
+              <select id="micModeInput">
+                <option value="wake">Wake Word</option>
+                <option value="push">Push to Talk</option>
+              </select>
+            </div>
+            <div class="settings-row">
+              <label>Speech Rate</label>
+              <input id="speechRateInput" type="number" min="0.8" max="1.8" step="0.05" />
+            </div>
+            <div class="settings-row">
+              <label>Self-Update Guard</label>
+              <input id="selfUpdateGuardInput" type="checkbox" />
+            </div>
+            <div class="settings-row">
+              <label>Self-Update Minutes</label>
+              <input id="selfUpdateMinutesInput" type="number" min="1" max="240" step="1" />
+            </div>
+          </section>
         </div>
-        <div class="settings-row">
-          <label>Persona Prompt</label>
-          <textarea id="personaPromptInput" rows="3" placeholder="Optional personality override..."></textarea>
-        </div>
-        <div class="settings-row">
-          <label>Model</label>
-          <input id="modelInput" type="text" placeholder="qwen-coder" />
-        </div>
-        <div class="settings-row">
-          <label>Embedding Model</label>
-          <input id="embeddingInput" type="text" placeholder="qwen-coder" />
-        </div>
-        <div class="settings-row">
-          <label>Ollama URL</label>
-          <input id="ollamaInput" type="text" placeholder="http://localhost:11434" />
-        </div>
-        <div class="settings-row">
-          <label>Allow Remote Ollama</label>
-          <input id="allowRemoteInput" type="checkbox" />
-        </div>
-        <div class="settings-row">
-          <label>Allowed Roots</label>
-          <textarea id="allowedRootsInput" rows="2" placeholder="C:\Projects; D:\Work"></textarea>
-        </div>
-        <div class="settings-row">
-          <label>Trust Project</label>
-          <button id="trustProject" class="ghost">Pick Folder</button>
-        </div>
-        <div class="settings-row">
-          <label>App Allowlist</label>
-          <input id="appAllowlistInput" type="text" placeholder="notepad.exe; code.exe" />
-        </div>
-        <div class="settings-row">
-          <label>Hotkey</label>
-          <input id="hotkeyInput" type="text" placeholder="Ctrl+Shift+O" />
-        </div>
-        <div class="settings-row">
-          <label>Start on Login</label>
-          <input id="startupInput" type="checkbox" />
-        </div>
-        <div class="settings-row">
-          <label>Popup Mode</label>
-          <select id="popupInput">
-            <option value="hotkey">Hotkey Only</option>
-            <option value="hotkey+timer">Hotkey + Timer</option>
-          </select>
-        </div>
+
         <div class="settings-actions">
           <button id="saveSettings">Save</button>
         </div>
@@ -78,6 +167,11 @@
 
       <div class="workspace">
         <div class="tools-column">
+          <div class="tools-column-header">
+            <div class="tools-title">Action Deck</div>
+            <div class="tools-subtitle">Files, commands, memory, web, and git</div>
+          </div>
+          <div class="tools-stack">
           <div class="panel">
             <div class="panel-header">
               <div>File Editor</div>
@@ -85,6 +179,7 @@
                 <button id="newFile" class="ghost">New</button>
                 <button id="openFile" class="ghost">Open</button>
                 <button id="aiEdit" class="ghost">AI Edit</button>
+                <button id="runChecks" class="ghost">Run Checks</button>
                 <button id="saveFile">Save</button>
                 <button id="capture" class="ghost">Capture</button>
               </div>
@@ -95,13 +190,13 @@
 
           <div class="panel">
             <div class="panel-header">
-              <div>App Control</div>
+              <div>Command Runner</div>
               <div class="panel-actions">
-                <button id="launchApp" class="ghost">Launch</button>
-                <button id="focusApp" class="ghost">Focus</button>
+                <button id="runCommand" class="ghost">Run</button>
               </div>
             </div>
-            <input id="appCommand" type="text" placeholder="notepad.exe or full path" />
+            <input id="shellCommand" type="text" placeholder="npm run test" />
+            <input id="commandCwd" type="text" placeholder="Working directory (optional)" />
           </div>
 
           <div class="panel">
@@ -114,12 +209,43 @@
             <input id="memoryQuery" type="text" placeholder="Search your memories..." />
             <div class="memory-results" id="memoryResults"></div>
           </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>Web Search</div>
+              <div class="panel-actions">
+                <button id="webSearchBtn" class="ghost">Search</button>
+              </div>
+            </div>
+            <input id="webQuery" type="text" placeholder="Search the web..." />
+            <div class="memory-results" id="webResults"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>Git Tools</div>
+              <div class="panel-actions">
+                <button id="gitStatusBtn" class="ghost">Status</button>
+                <button id="gitLogBtn" class="ghost">Log</button>
+                <button id="gitDiffBtn" class="ghost">Diff</button>
+                <button id="gitCommitBtn" class="ghost">Commit</button>
+              </div>
+            </div>
+            <input id="gitCwd" type="text" placeholder="Repo path (optional)" />
+            <input id="gitCommitMessage" type="text" placeholder="Commit message (for Commit button)" />
+          </div>
+          </div>
         </div>
 
         <div class="chat-column">
+          <div class="chat-column-header">
+            <div class="chat-title">Conversation</div>
+            <div class="chat-subtitle">Natural chat, auto tools, and streaming responses</div>
+          </div>
           <div class="chat" id="chat"></div>
 
           <div class="input">
+            <div class="input-hint">Type naturally or use slash commands like <code>/search</code> and <code>/git status</code>.</div>
             <textarea id="prompt" rows="3" placeholder="Ask me to code, search, or automate..."></textarea>
             <div class="actions">
               <button id="send">Send</button>

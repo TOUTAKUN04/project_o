@@ -12,6 +12,8 @@
   --danger: #c42b1c;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   --radius: 10px;
+  --window-bg: rgba(243, 243, 243, 0.72);
+  --window-border: rgba(255, 255, 255, 0.48);
   --font: "Segoe UI Variable Text", "Segoe UI", Tahoma, sans-serif;
 }
 
@@ -25,15 +27,174 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   font-family: var(--font);
+}
+
+body,
+.header,
+.panel,
+.chat,
+.input,
+.settings,
+.message,
+.status,
+button,
+input,
+select,
+textarea {
+  transition: background 220ms ease, border-color 220ms ease, color 220ms ease, box-shadow 220ms ease;
+}
+
+body.master-active {
+  --bg: #0b0b0d;
+  --panel: #141417;
+  --panel-2: #1a1a1f;
+  --border: #3a2a17;
+  --border-strong: #ff8a1f;
+  --text: #f6e7d1;
+  --muted: #ffbf7f;
+  --accent: #ff8a1f;
+  --accent-hover: #ffa84d;
+  --accent-soft: rgba(255, 138, 31, 0.2);
+  --danger: #ff5a36;
+  --shadow: 0 8px 18px rgba(0, 0, 0, 0.38);
+  --window-bg: rgba(11, 11, 13, 0.62);
+  --window-border: rgba(255, 138, 31, 0.3);
+  background: transparent;
+}
+
+body.master-active .header {
+  background: linear-gradient(135deg, rgba(255, 138, 31, 0.18) 0%, rgba(20, 20, 23, 0.98) 52%, rgba(12, 12, 14, 0.98) 100%);
+  border-color: #ff8a1f;
+  outline: 1px solid rgba(255, 138, 31, 0.55);
+  outline-offset: 0;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+}
+
+body.master-active .subtitle {
+  color: #ffcb95;
+}
+
+body.master-active .status {
+  color: #ffe4c3;
+  border-color: rgba(255, 168, 77, 0.65);
+  background: linear-gradient(135deg, rgba(255, 138, 31, 0.28), rgba(71, 36, 10, 0.55));
+  outline: 1px solid rgba(255, 168, 77, 0.62);
+  outline-offset: 0;
+  box-shadow: none;
+}
+
+body.master-active .settings,
+body.master-active .panel,
+body.master-active .chat,
+body.master-active .input,
+body.master-active .modal-card,
+body.master-active .tools-column-header,
+body.master-active .chat-column-header,
+body.master-active .settings-section {
+  background:
+    linear-gradient(180deg, rgba(24, 24, 28, 0.96) 0%, rgba(18, 18, 22, 0.98) 100%);
+  border-color: rgba(255, 138, 31, 0.35);
+  outline: 1px solid rgba(255, 138, 31, 0.42);
+  outline-offset: 0;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.44);
+}
+
+body.master-active .memory-item,
+body.master-active .diff-view {
+  background: linear-gradient(180deg, rgba(28, 28, 34, 0.96), rgba(22, 22, 28, 0.98));
+  border-color: rgba(255, 138, 31, 0.28);
+}
+
+body.master-active .message {
+  background: linear-gradient(180deg, rgba(29, 29, 35, 0.96), rgba(22, 22, 28, 0.98));
+  border-color: rgba(255, 138, 31, 0.32);
+}
+
+body.master-active .message.user {
+  background: linear-gradient(180deg, rgba(63, 33, 6, 0.86), rgba(40, 22, 6, 0.96));
+  border-color: rgba(255, 166, 71, 0.58);
+}
+
+body.master-active .input-hint code {
+  background: rgba(255, 138, 31, 0.2);
+  border-color: rgba(255, 168, 77, 0.56);
+  color: #ffe8cc;
+}
+
+body.master-active input,
+body.master-active select,
+body.master-active textarea {
+  background: #15151a;
+  border-color: rgba(255, 138, 31, 0.46);
+  color: #ffe8cc;
+}
+
+body.master-active input:focus,
+body.master-active select:focus,
+body.master-active textarea:focus,
+body.master-active button:focus {
+  outline-color: rgba(255, 168, 77, 0.72);
+}
+
+body.master-active button {
+  background: #1b1b21;
+  border-color: rgba(255, 138, 31, 0.45);
+  color: #ffe7c8;
+}
+
+body.master-active button:hover {
+  background: #24242b;
+  border-color: rgba(255, 168, 77, 0.66);
+}
+
+body.master-active button:active {
+  background: #2a2a31;
+}
+
+body.master-active button#send,
+body.master-active button#saveSettings,
+body.master-active button#saveFile,
+body.master-active button#confirmSave {
+  color: #120a02;
+  border-color: #ff8a1f;
+  background: linear-gradient(180deg, #ffb15f 0%, #ff8a1f 100%);
+  outline: 1px solid rgba(255, 203, 149, 0.72);
+  outline-offset: 0;
+  box-shadow: none;
+}
+
+body.master-active button#send:hover,
+body.master-active button#saveSettings:hover,
+body.master-active button#saveFile:hover,
+body.master-active button#confirmSave:hover {
+  border-color: #ffba76;
+  background: linear-gradient(180deg, #ffc685 0%, #ff9a33 100%);
+}
+
+body.master-active .diff-line.changed {
+  background: rgba(255, 82, 34, 0.24);
+}
+
+body.master-active .diff-line.added {
+  background: rgba(255, 138, 31, 0.23);
 }
 
 .overlay {
   width: 100%;
   height: 100%;
   padding: 14px;
+  border: 1px solid var(--window-border);
+  border-radius: 14px;
+  background: var(--window-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
 }
 
 .header {
@@ -79,25 +240,48 @@ body {
 }
 
 .settings {
-  margin-top: 12px;
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--panel);
   box-shadow: var(--shadow);
   display: none;
+  max-height: 42vh;
+  overflow: auto;
 }
 
 .settings.open {
   display: block;
 }
 
+.settings-shell {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.settings-section {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-2);
+  padding: 10px;
+}
+
+.settings-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
 .settings-row {
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: minmax(120px, 155px) minmax(0, 1fr);
   gap: 8px;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
 
 .settings-row label {
@@ -105,35 +289,70 @@ body {
   color: var(--muted);
 }
 
+.settings-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  justify-self: start;
+}
+
 .settings-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .workspace {
-  margin-top: 12px;
-  height: calc(100% - 86px);
+  flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(330px, 390px) minmax(0, 1fr);
+  grid-template-columns: minmax(340px, 430px) minmax(0, 1fr);
   gap: 12px;
+  overflow: hidden;
 }
 
 .tools-column {
   min-height: 0;
   overflow: auto;
   padding-right: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tools-column-header,
+.chat-column-header {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+  padding: 10px 12px;
+}
+
+.tools-title,
+.chat-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tools-subtitle,
+.chat-subtitle {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.tools-stack {
+  display: grid;
+  gap: 10px;
 }
 
 .chat-column {
   min-height: 0;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .panel {
-  margin-bottom: 10px;
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -147,6 +366,7 @@ body {
   justify-content: space-between;
   margin-bottom: 8px;
   font-weight: 600;
+  gap: 10px;
 }
 
 .panel-actions {
@@ -163,7 +383,7 @@ body {
 
 .memory-results {
   margin-top: 8px;
-  max-height: 160px;
+  max-height: 180px;
   overflow-y: auto;
   display: grid;
   gap: 6px;
@@ -179,7 +399,7 @@ body {
 
 .chat {
   flex: 1;
-  min-height: 220px;
+  min-height: 260px;
   overflow-y: auto;
   padding: 12px;
   border: 1px solid var(--border);
@@ -207,13 +427,32 @@ body {
   background: #ffffff;
 }
 
+.message.assistant.thinking {
+  color: var(--muted);
+  font-style: italic;
+}
+
 .input {
-  margin-top: 10px;
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--panel);
   box-shadow: var(--shadow);
+}
+
+.input-hint {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.input-hint code {
+  background: var(--accent-soft);
+  border: 1px solid #b9d5ef;
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-family: Consolas, "Courier New", monospace;
+  color: #0c4d88;
 }
 
 input,
@@ -394,12 +633,13 @@ button.active {
 @media (max-width: 980px) {
   .overlay {
     padding: 10px;
+    gap: 10px;
   }
 
   .workspace {
-    height: auto;
     min-height: 0;
     grid-template-columns: 1fr;
+    overflow: auto;
   }
 
   .tools-column {
@@ -409,5 +649,13 @@ button.active {
 
   .chat {
     min-height: 300px;
+  }
+
+  .settings {
+    max-height: 55vh;
+  }
+
+  .settings-shell {
+    grid-template-columns: 1fr;
   }
 }

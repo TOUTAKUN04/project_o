@@ -28,3 +28,7 @@ Contact the repository owner directly on GitHub:
 - File editing is permission-gated per session.
 - File access should be limited to trusted roots.
 - Adapter/webhook integrations should only be enabled with valid credentials and strict network controls.
+- Webhook server is local-only by default and supports token-based auth (`OVERLAY_WEBHOOK_TOKEN`).
+- Remote webhook mode requires `WHATSAPP_APP_SECRET`.
+- App launch blocks dangerous executables by default (override only with `OVERLAY_ALLOW_DANGEROUS_LAUNCH=1` when absolutely required).
+- App launch allowlist should use absolute executable paths only.

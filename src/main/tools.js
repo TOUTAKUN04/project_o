@@ -22,16 +22,12 @@
     required: [],
     properties: {},
   },
-  'apps:launch': {
+  'system:run': {
     required: ['command'],
     properties: {
       command: 'string',
-    },
-  },
-  'apps:focus': {
-    required: ['appName'],
-    properties: {
-      appName: 'string',
+      cwd: 'string',
+      timeoutMs: 'number',
     },
   },
 };
